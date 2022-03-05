@@ -1,0 +1,50 @@
+<div th:replace="/common/header"></div>
+
+<div id="BackLink">
+    <a href="/catalog/main">Return to Main Menu</a>
+</div>
+
+<div id="Catalog">
+
+    <table>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Product ID</th>
+            <th>Name</th>
+        </tr>
+
+        <tr th:each="product:${productList}">
+            <td>
+                <a th:href="@{viewProduct(productId=${product.productId},name=${product.name},categoryId=${product.categoryId},description=${product.description})}">
+                    <image th:src="${product.description}"/>
+                </a>
+            </td>
+            <td th:text="${product.productId}"></td>
+            <td th:text="${product.name}"></tdth>
+        </tr>
+
+<!--        <tr th:each="item:${itemList}">-->
+<!--            <td>-->
+<!--                <a th:text="${item.itemId}"-->
+<!--                   th:href="@{/catalog/viewItem(itemId=${item.itemId},-->
+<!--                                                productId=${product.productId},name=${product.name},categoryId=${product.categoryId},description=${product.description})}">-->
+<!--                    错误提示item.itemId-->
+<!--                </a>-->
+<!--            </td>-->
+<!--        <c:forEach var="product" items="${sessionScope.productList}">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <a href="viewProduct?productId=${product.productId}">${product.description}</a>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <a href="viewProduct?productId=${product.productId}">${product.productId}</a>-->
+<!--                </td>-->
+<!--                <td>${product.name}</td>-->
+<!--            </tr>-->
+<!--        </c:forEach>-->
+
+    </table>
+
+</div>
+
+<div th:replace="/common/footer"></div>

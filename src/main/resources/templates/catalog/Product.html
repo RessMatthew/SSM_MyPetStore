@@ -1,0 +1,83 @@
+<div th:replace="/common/header"></div>
+<div id="BackLink">
+
+    <a th:text="'Return to'+ ${product.categoryId}" th:href="@{viewCategory(categoryId=${product.categoryId})}">错误提示product.categoryId}</a>
+
+</div>
+<div id="Catalog">
+
+    <h2 th:text="${product.name}">错误提示product.name}</h2>
+<!--    <a th:text="${product.productId}">??</a>-->
+    <table>
+        <tr>
+            <th>Item ID</th>
+            <th>Product ID</th>
+            <th>Description</th>
+            <th>List Price</th>
+            <th>&nbsp;</th>
+        </tr>
+<!--        <c:forEach var="item" items="${sessionScope.itemList}">-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <a href="viewItem?itemId=${item.itemId}">${item.itemId}</a>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    ${item.product.productId}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    ${item.attribute1} ${item.attribute2} ${item.attribute3}-->
+<!--                    ${item.attribute4} ${item.attribute5} ${sessionScope.product.name}-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <fmt:formatNumber value="${item.listPrice}" pattern="$#,##0.00" />-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <a class="Button" href="addItemToServlet?workingItemId=${item.itemId}">Add to Cart</a>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </c:forEach>-->
+
+        <tr th:each="item:${itemList}">
+            <td>
+                <a th:text="${item.itemId}"
+                   th:href="@{/catalog/viewItem(itemId=${item.itemId},
+                                                productId=${product.productId},name=${product.name},categoryId=${product.categoryId},description=${product.description})}">
+                    错误提示item.itemId
+                </a>
+<!--                <a th:text="${product.productId}">??</a>-->
+            </td>
+            <td th:text="${item.product.productId}">
+                错误提示item.product.productId
+            </td>
+<!--            <td th:text="${item.attribute1}+' '+${item.attribute2}+' '+${item.attribute3}+' '+ ${item.attribute4}+' '+ ${item.attribute5} +' '+${product.name}">-->
+<!--                错误提示item.attribute1,item.attribute2,item.attribute3,item.attribute4,item.attribute5,sessionScope.product.name-->
+<!--            </td>-->
+            <td>
+                <span th:if="${item.attribute1!=null}"
+                      th:text="${item.attribute1}">
+                </span>
+                <span th:if="${item.attribute2!=null}"
+                      th:text="${item.attribute2}">
+                </span>
+                <span th:if="${item.attribute3!=null}"
+                      th:text="${item.attribute3}">
+                </span>
+                <span th:if="${item.attribute4!=null}"
+                      th:text="${item.attribute4}">
+                </span>
+                <span th:if="${item.attribute5!=null}"
+                      th:text="${item.attribute5}">
+                </span>
+            </td>
+            <td>
+                <fmt:formatNumber th:text="${item.listPrice}" pattern="$#,##0.00" />
+            </td>
+            <td>
+                <a class="Button" href="addItemToServlet?workingItemId=item.itemId">Add to Cart</a>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<div th:replace="/common/footer"></div>

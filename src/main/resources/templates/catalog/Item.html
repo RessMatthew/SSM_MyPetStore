@@ -1,0 +1,67 @@
+<div th:replace="/common/header"></div>
+<div id="BackLink">
+    <a th:text="'Return to'+ ${product.productId}" th:href="@{viewProduct(productId=${product.productId},name=${product.name},categoryId=${product.categoryId},description=${product.description})}">错误提示product.productId</a>
+</div>
+
+<div id="Catalog">
+    <table>
+        <tr>
+            <td>
+                <image th:src="${product.description}"/>
+            </td>
+            <!--<td th:src="@{product.description}">
+                    错误提示product.description
+            </td>-->
+        </tr>
+        <tr>
+            <td>
+                <b th:text="${item.itemId}">错误提示item.itemId</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+<!--                <b th:text="${item.attribute1}+' '+${item.attribute2}+' '+${item.attribute3}+' '+ ${item.attribute4}+' '+ ${item.attribute5}">-->
+<!--                    错误提示item.attribute1,item.attribute2,item.attribute3,item.attribute4,item.attribute5,sessionScope.product.name-->
+<!--                </b>-->
+                <b th:if="${item.attribute1!=null}"
+                      th:text="${item.attribute1}">
+                </b>
+                <b th:if="${item.attribute2!=null}"
+                      th:text="${item.attribute2}">
+                </b>
+                <b th:if="${item.attribute3!=null}"
+                      th:text="${item.attribute3}">
+                </b>
+                <b th:if="${item.attribute4!=null}"
+                      th:text="${item.attribute4}">
+                </b>
+                <b th:if="${item.attribute5!=null}"
+                      th:text="${item.attribute5}">
+                </b>
+            </td>
+
+        </tr>
+        <tr>
+            <td th:text="${product.name}">错误提示roduct.name</td>
+        </tr>
+        <tr>
+            <td th:text="'qty: '+${item1}">错误提示item1</td>
+        </tr>
+        <tr>
+            <td th:if="${item1} le 0">status: Back ordered</td>
+            <td th:if="${item1} gt 0">status: in stock</td>
+        </tr>
+        <tr>
+            <td>
+                <fmt:formatNumber th:text="'listPrice: '+${item.listPrice}" pattern="$#,##0.00" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a class="Button" href="addItemToServlet?workingItemId=${item.itemId}">Add to Cart</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<div th:replace="/common/footer"></div>
