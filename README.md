@@ -1,4 +1,5 @@
 # SSM_MyPetStore
-## 1.注意验证码刷新未实现
-## 2.javascript未实现绑定
-## 3.数据库在群里面
+
+## 2022/3/5 11.20
+- 订单改thymeleaf，Controller未做
+- Ajax 请求服务器端url及其Servelt改Controller未做
