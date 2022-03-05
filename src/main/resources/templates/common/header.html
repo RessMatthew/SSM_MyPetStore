@@ -38,11 +38,11 @@
 
                 <img align="middle" src="/images/separator.gif" />
 
-                <a id="signin" href="/account/viewSignin">Sign In</a>
+                <a id="signin" href="/account/viewSignin" th:if="${user}==null">Sign In</a>
 
                 <img align="middle" src="/images/separator.gif" />
 
-                <a id="signout" href="/account/signout">Sign Out </a>
+                <a id="signout" href="/account/signout" th:if="${user}!=null">Sign Out </a>
 
                 <img align="middle" src="/images/separator.gif" />
 

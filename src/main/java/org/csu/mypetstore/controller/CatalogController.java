@@ -3,6 +3,7 @@ package org.csu.mypetstore.controller;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
+import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +25,18 @@ public class CatalogController {
     private CatalogService catalogService;
 
     @GetMapping ("/main")
-    public String loginForm(){
+    public String loginForm(HttpServletRequest request,Model model){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user!=null){model.addAttribute("user",user);}
         return "/catalog/Main";
     }
 
     @GetMapping ("/viewCategory")
-    public String viewCatalog(Category category, Model model){
+    public String viewCatalog(Category category, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user!=null){model.addAttribute("user",user);}
         String categoryId=category.getCategoryId();
         Category categoryByCategoryId=catalogService.getCategory(categoryId);
         List<Product> productList=catalogService.getProductListByCategory(categoryId);
@@ -38,7 +47,10 @@ public class CatalogController {
     }
 
     @GetMapping("/viewProduct")
-    public String viewProduct(Product product, Model model){
+    public String viewProduct(Product product, Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user!=null){model.addAttribute("user",user);}
         List<Item> itemList=catalogService.getItemListByProduct(product.getProductId());
         model.addAttribute("product",product);
         model.addAttribute("itemList",itemList);
@@ -46,7 +58,10 @@ public class CatalogController {
     }
 
     @GetMapping("/viewItem")
-    public String viewItem(Item item_post,Product product,Model model){
+    public String viewItem(Item item_post,Product product,Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user!=null){model.addAttribute("user",user);}
         Item item=catalogService.getItem(item_post.getItemId());
         int item1=catalogService.getInventoryQuantity(item.getItemId());
 
@@ -57,7 +72,10 @@ public class CatalogController {
     }
 
     @PostMapping("/search")
-    public String searchProduct(String keyword,Model model){
+    public String searchProduct(String keyword,Model model,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user!=null){model.addAttribute("user",user);}
         List<Product> productList=new ArrayList<Product>();
         productList=catalogService.searchProductList(keyword);
 

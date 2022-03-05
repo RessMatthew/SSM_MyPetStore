@@ -73,7 +73,7 @@
                 <fmt:formatNumber th:text="${item.listPrice}" pattern="$#,##0.00" />
             </td>
             <td>
-                <a class="Button" href="addItemToServlet?workingItemId=item.itemId">Add to Cart</a>
+                <a class="Button" th:href="@{/cart/addItemToCart(workingItemId=${item.itemId})}">Add to Cart</a>
             </td>
         </tr>
 

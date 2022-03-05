@@ -4,11 +4,13 @@ import org.csu.mypetstore.domain.CartItem;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.persistence.CartDAO;
 import org.csu.mypetstore.persistence.impl.CartDAOImpl;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 
+@Service
 public class CartService {
     private CartDAO cartDAO;
 

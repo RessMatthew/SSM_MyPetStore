@@ -1,0 +1,92 @@
+<div th:replace="/common/header"></div>
+<div id = "BackLink">
+    <a href="/catalog/main">Return to Main Menu</a>
+</div>
+
+<div id="Catalog">
+
+    <div id="Cart">
+        <h2>Shopping Cart</h2>
+        <form action="updateCart" method="post">
+            <table id="carttable" >
+                <tr>
+                    <th><b>Item ID</b></th>
+                    <th><b>Product ID</b></th>
+                    <th><b>Description</b></th>
+                    <th><b>In Stock?</b></th>
+                    <th><b>Quantity</b></th>
+                    <th><b>List Price</b></th>
+                    <th><b>Total Cost</b></th>
+                    <th><b>&nbsp;</b></th>
+                </tr>
+                <tr th:if="${cart.size()} == 0">
+                    <td colspan="8"><b>Your cart is empty.</b></td>
+                </tr>
+
+
+                <tr th:each="cartItem:${cart}" th:id="${cartItem.item.itemId}">
+                    <td>
+                        <a th:text="${cartItem.item.itemId}"
+                           th:href="@{/catalog/viewItem(itemId=${cartItem.item.itemId},
+                                                productId=${cartItem.item.product.productId},name=${cartItem.item.product.name},categoryId=${cartItem.item.product.categoryId},description=${cartItem.item.product.description})}">
+                            错误提示item.itemId
+                        </a>
+                    </td>
+                    <td th:text=" ${cartItem.item.product.productId}">
+                        错误提示cartItem.item.product.productId
+                    </td>
+                    <td>
+                        <span th:if="${cartItem.item.attribute1!=null}"
+                              th:text="${cartItem.item.attribute1}">
+                        </span>
+                                <span th:if="${cartItem.item.attribute2!=null}"
+                                      th:text="${cartItem.item.attribute2}">
+                        </span>
+                                <span th:if="${cartItem.item.attribute3!=null}"
+                                      th:text="${cartItem.item.attribute3}">
+                        </span>
+                                <span th:if="${cartItem.item.attribute4!=null}"
+                                      th:text="${cartItem.item.attribute4}">
+                        </span>
+                                <span th:if="${cartItem.item.attribute5!=null}"
+                                      th:text="${cartItem.item.attribute5}">
+                        </span>
+                    </td>
+                    <td th:text="${cartItem.inStock}">
+                        错误提示cartItem.inStock
+                    </td>
+                    <td>
+                        <input type="text" th:name="${cartItem.item.itemId}" th:value="${cartItem.quantity}" onblur="updateItem(this);"/>
+                    </td>
+                    <td>
+                        <fmt:formatNumber th:text="${cartItem.item.listPrice}" pattern="$#,##0.00"/>
+                    </td>
+                    <td>
+                        <div id="itemtotalcost">
+                            <fmt:formatNumber th:text="${cartItem.total}" pattern="$#,##0.00" />
+                        </div>
+                    </td>
+                    <td>
+                        <a th:href="@{/cart/removeItemFromCart(workingItemId=${cartItem.item.itemId})}" class="Button">Remove</a>
+                    </td>
+
+                </tr>
+            </table>
+<!--            <table>-->
+<!--                <tr>-->
+<!--                    <td colspan="7">-->
+<!--                        <input type="submit" value="Update Cart">-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+        </form>
+
+        <p th:if="${cart.size() > 0}">
+            <a href="viewOrderForm" class="Button">Proceed to Checkout</a>
+        </p>
+    </div>
+
+    <div id="Separator">&nbsp;</div>
+</div>
+
+<div th:replace="/common/footer"></div>
