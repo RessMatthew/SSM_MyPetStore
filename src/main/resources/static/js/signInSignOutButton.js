@@ -4,7 +4,7 @@ $(document).ready(function(){
 
         $.ajax({
             type    :"GET",
-            url     :"signinsignout",
+            url     :"/account/signinsignout",
             success :function(data){
                 // alert(data);
                 if(data==="Exist"){

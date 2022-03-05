@@ -33,7 +33,7 @@ $(document).ready(function(){
 
         $.ajax({
             type    :"GET",
-            url     :"usernameIsExist?username="+$('#username').val(),
+            url     :"/account/usernameIsExist?username="+$('#username').val(),
             success :function(data){
 
                  // console.alert(data);

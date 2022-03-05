@@ -2,7 +2,7 @@ var xhr;
 function updateItem(item) {
     xhr = new XMLHttpRequest();
     xhr.onreadystatechange = update;
-    xhr.open("POST", "updateCartItem?itemId="+item.name+"&quantity="+item.value, true);
+    xhr.open("POST", "/cart/updateCartItem?itemId="+item.name+"&quantity="+item.value, true);
     xhr.send(null);
 }
 

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 @Controller
 @RequestMapping("/account")
@@ -147,4 +148,60 @@ public class AccountController {
             return "/account/MyAccount";
         }
     }
+
+    @GetMapping("/signinsignout")
+    public void signInSignOut(HttpServletRequest request,HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String msg = null;
+
+        response.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+
+        if(user != null){
+            System.out.println(user.getUsername());
+            out.print("Exist");
+        }
+        else {
+            out.print("Not Exist");
+//            System.out.println("NE");
+        }
+
+        out.flush();
+        out.close();
+
+    }
+
+    @GetMapping("/usernameIsExist")
+    public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String username = request.getParameter("username");
+        userService = new UserService();
+        User user = userService.findUserByUsername(username);
+
+        response.setContentType("text/plain");
+        PrintWriter out = response.getWriter();
+
+        System.out.println(username);
+
+        if(username==""){
+            out.print("Empty");
+//            System.out.println("empty");
+        }
+        else if(user != null){
+            out.print("Exist");
+//            System.out.println('E');
+        }
+        else {
+            out.print("Not Exist");
+//            System.out.println("NE");
+        }
+
+        out.flush();
+        out.close();
+
+
+    }
+
 }

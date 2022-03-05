@@ -1,5 +1,6 @@
 package org.csu.mypetstore.controller;
 
+import com.alibaba.fastjson.JSON;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +37,9 @@ public class CatalogController {
 
     @GetMapping ("/viewCategory")
     public String viewCatalog(Category category, Model model, HttpServletRequest request){
+
+        System.out.println("...................................................view");
+
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user!=null){model.addAttribute("user",user);}
@@ -43,7 +49,7 @@ public class CatalogController {
 
         model.addAttribute("productList",productList);
         model.addAttribute("category",categoryByCategoryId);
-        return "/catalog/Category";
+        return "catalog/Category";
     }
 
     @GetMapping("/viewProduct")
@@ -82,6 +88,57 @@ public class CatalogController {
         model.addAttribute("productList",productList);
         return "/catalog/SearchProduct";
     }
+
+    @GetMapping("/searchThis")
+    public void searchAutoComplete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String keyword;
+
+        keyword=request.getParameter("keyword");
+
+        System.out.println(keyword);
+
+        Product product=new Product();
+        Item item=new Item();
+        CatalogService service=new CatalogService();
+        List<Product> productList=new ArrayList<Product>();
+        productList=service.searchProductList(keyword);
+
+        System.out.println("start");
+
+        StringBuffer sb = new StringBuffer("[");
+
+        for(int i=0;i<productList.size();i++){
+            if(i== productList.size()-1) {
+                sb.append("\"" + productList.get(i).getName() + "\"]");
+            }else{
+                sb.append("\"" + productList.get(i).getName() + "\",");
+            }
+        }
+
+        System.out.println(keyword);
+        System.out.println(productList.size());
+        System.out.println(sb.toString());
+        response.getWriter().write(sb.toString());
+
+    }
+
+    @GetMapping("/fwItem")
+    public void floatingWindow(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String itemId;
+        itemId=request.getParameter("itemId");
+        CatalogService service=new CatalogService();
+        Item item=service.getItem(itemId);
+//        int item1=service.getInventoryQuantity(itemId);
+
+
+        String jsonstr = JSON.toJSONString(item);
+
+        response.getWriter().write(jsonstr);
+
+    }
+
 
 
 }

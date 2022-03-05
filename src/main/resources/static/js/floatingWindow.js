@@ -5,17 +5,19 @@ var fadetime = 100;
 
 var flw1 = "<table>\n" +
     "        <tr>\n" +
-    "            <td>\n" ;
+    "            <td>\n" +
+    "<image src=\" ";
 
-    "                ${sessionScope.product.description}\n"
+    // "                <image th:src=\"${product.description}\"/>\n"
 
 var flw2 =
+    "\"/>"+
     "            </td>\n" +
     "        </tr>\n" +
     "        <tr>\n" +
     "            <td>\n" ;
 
-     "                <b>${sessionScope.item.itemId}</b>\n"
+     // "                <b>${sessionScope.item.itemId}</b>\n"
 
 var flw3 =
 "            </td>\n" +
@@ -25,7 +27,7 @@ var flw3 =
     "                <b><font size=\"4\">\n" ;
 
 
- "                    ${sessionScope.item.attribute1}"
+ // "                    ${sessionScope.item.attribute1}"
 
 
 var flw4 =
@@ -41,7 +43,7 @@ var flw4 =
     "            <td>" ;
 
 
-    "${sessionScope.product.name}"
+    // "${sessionScope.product.name}"
 
 
 
@@ -87,7 +89,7 @@ $(document).ready(function(){
 
         $.ajax({
            type     :"get",
-           url      :"fwItem?itemId="+"EST-18",
+           url      :"/catalog/fwItem?itemId="+"EST-18",
            success  :function (msg) {
                // console.log(msg);
                var fjson = $.parseJSON(msg);
@@ -102,6 +104,7 @@ $(document).ready(function(){
                var  yOffset = 25;
                $("#tooltip").css("display","block").css("position","absolute").css("top",(mousePos.y - yOffset) + "px").css("left",(mousePos.x + xOffset) + "px");
                var flw = flw1+fdescription+flw2+fitemId+flw3+fattribute1+flw4+fproductname+flw5;
+               console.log(flw);
                $("#tooltip").empty();
                $("#tooltip").append(flw);
                $("#tooltip").hide();
@@ -117,7 +120,7 @@ $(document).ready(function(){
 
         $.ajax({
             type     :"get",
-            url      :"fwItem?itemId="+"EST-4",
+            url      :"/catalog/fwItem?itemId="+"EST-4",
             success  :function (msg) {
                 // console.log(msg);
                 var fjson = $.parseJSON(msg);
@@ -145,7 +148,7 @@ $(document).ready(function(){
 
         $.ajax({
             type     :"get",
-            url      :"fwItem?itemId="+"EST-6",
+            url      :"/catalog/fwItem?itemId="+"EST-6",
             success  :function (msg) {
                 // console.log(msg);
                 var fjson = $.parseJSON(msg);
@@ -173,7 +176,7 @@ $(document).ready(function(){
 
         $.ajax({
             type     :"get",
-            url      :"fwItem?itemId="+"EST-13",
+            url      :"/catalog/fwItem?itemId="+"EST-13",
             success  :function (msg) {
                 // console.log(msg);
                 var fjson = $.parseJSON(msg);
@@ -201,7 +204,7 @@ $(document).ready(function(){
 
         $.ajax({
             type     :"get",
-            url      :"fwItem?itemId="+"EST-16",
+            url      :"/catalog/fwItem?itemId="+"EST-16",
             success  :function (msg) {
                 // console.log(msg);
                 var fjson = $.parseJSON(msg);
@@ -229,7 +232,7 @@ $(document).ready(function(){
 
         $.ajax({
             type     :"get",
-            url      :"fwItem?itemId="+"EST-18",
+            url      :"/catalog/fwItem?itemId="+"EST-18",
             success  :function (msg) {
                 // console.log(msg);
                 var fjson = $.parseJSON(msg);
