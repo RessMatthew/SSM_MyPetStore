@@ -1,0 +1,41 @@
+<div th:replace="/common/header"></div>
+
+<div id="BackLink">
+    <a href="/catalog/main">Return to Main Menu</a>
+</div>
+<font color="red" th:if="${msg}!=null" th:text="${msg}"></font>
+<form action="/account/signin" method="post">
+    <div id="Sign">
+        <table align="center">
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" required="required"></td>
+
+            </tr>         <br>
+            <tr>
+                <td >Password:</td>
+                <td><input type="password" name = "password" required="required"></td>
+            </tr>
+            <tr>
+                <td> Verification Code:</td>
+                <td><input type="text" name="inputCode" required></td>
+            </tr>
+            <tr>
+                <td> <img id="myImage" name="myImage" src="/account/authCode"></td>
+                <td><a href="javascript:void(0)" onclick="myReload()">uncleary!change the image</a></td>
+            </tr>
+
+
+
+            <tr>
+                <td> <input type="submit" value="Signin"></td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+<p align="center">
+    Need a username and password?<a href="/account/viewRegister">Resgister Now!</a>
+</p>
+
+<div th:replace="/common/footer"></div>

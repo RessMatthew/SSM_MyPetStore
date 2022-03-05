@@ -14,7 +14,7 @@ public class UserDAOImpl implements UserDAO {
     private final static String findUserByUsernameAndPasswordSQL = "select * from user where username = ? and password = ?";
     private final static String updateUserByUsernameSQL =
             "update user set password=?,firstname=?,lastname=?,email=?,phone=?,address1=?,address2=?,city=?,state=?,zip=?,country=?, languagepre=?,favoritecata=?,iflist=?,ifbanner=?  where username = ?";
-    private static String insertUserByUsernameAndPasswordSQL = "insert into user (username,password) values (?,?)";
+    private static String insertUserByUsernameAndPasswordSQL = "insert into user (username,password,firstname,lastname,email,phone,address1,address2,city,state,zip,country,languagepre) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     @Override
     public User findUserByUsername(String username) {
@@ -137,18 +137,30 @@ public class UserDAOImpl implements UserDAO {
             System.out.println("aaaaaaaaaaaaaa");
             while (resultSet2.next()){
 
-                System.out.println("aaaaaaaaaaaaaa");
+                //System.out.println("aaaaaaaaaaaaaa");
 
                 if(result==0)return result;
 
             }
 
             result = 1;
-            System.out.println("bbbbbbbbbbbbbbb");
+            //System.out.println("bbbbbbbbbbbbbbb");
 
             PreparedStatement preparedStatement1 = connection.prepareStatement(insertUserByUsernameAndPasswordSQL);
             preparedStatement1.setString(1,user.getUsername());
             preparedStatement1.setString(2,user.getPassword());
+            preparedStatement1.setString(3,user.getFirstname());
+            preparedStatement1.setString(4,user.getLastname());
+            preparedStatement1.setString(5,user.getEmail());
+            preparedStatement1.setString(6,user.getPhone());
+            preparedStatement1.setString(7,user.getAddress1());
+            preparedStatement1.setString(8,user.getAddress2());
+            preparedStatement1.setString(9,user.getCity());
+            preparedStatement1.setString(10,user.getState());
+            preparedStatement1.setString(11,user.getZip());
+            preparedStatement1.setString(12,user.getCountry());
+            preparedStatement1.setString(13,user.getLanguagepre());
+
             result = preparedStatement1.executeUpdate();
 
             System.out.println("result:"+result);

@@ -87,6 +87,8 @@ li {
 table {
     border-width: 0;
     empty-cells: show;
+    margin: auto;
+    text-align: center;
 }
 
 td, th {

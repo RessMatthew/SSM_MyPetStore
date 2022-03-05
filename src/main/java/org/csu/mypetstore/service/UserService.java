@@ -3,7 +3,9 @@ package org.csu.mypetstore.service;
 import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.persistence.UserDAO;
 import org.csu.mypetstore.persistence.impl.UserDAOImpl;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService {
     private UserDAO userDAO;
 

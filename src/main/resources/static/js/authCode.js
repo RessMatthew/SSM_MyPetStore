@@ -1,3 +1,3 @@
 function myReload() {
-    document.getElementById("myImage").src = "authCode?" + Math.random();
+    document.getElementById("myImage").src = "/account/authCode";
 }

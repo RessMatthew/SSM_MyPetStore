@@ -1,0 +1,167 @@
+<div th:replace="/common/header"></div>
+<style>
+    .okTips{
+        color : green;
+    }
+    .errorTips{
+        color : red;
+    }
+</style>
+
+<div id="BackLink">
+    <a href="/catalog/main">Return to Main Menu</a>
+</div>
+
+<form action="/account/register" method="post">
+    <h1 align="center">User Information</h1>
+    <table align="center">
+
+        <tr>
+            <td>Username:</td>
+            <td>
+                <input type="text" id="username" name = "username"  required>
+            </td>
+
+            <td id = "iEI"> <span id="isExistInfo"></span></td>
+        </tr>
+
+
+        <tr>
+            <td> New Password:  </td>
+            <td><input type="password" name="password" required>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Repeat Password:
+            </td>
+            <td >
+                <input type="password" name="repeatpwd" id="repeatpwd" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3 align="center">Account Information</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                First Name:
+            </td>
+            <td >
+                <input type="text" name="firstname" id="firstname" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Name:
+            </td>
+            <td >
+                <input type="text" name="lastname" id="lastname" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Email:
+            </td>
+            <td >
+                <input type="email" name="email" id="email" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Phone:
+            </td>
+            <td >
+                <input type="text" name="phone" id="phone" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Address1:
+            </td>
+            <td >
+                <input type="text" name="address1" id="address1" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Address2:
+            </td>
+            <td >
+                <input type="text" name="address2" id="address2" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                City:
+            </td>
+            <td >
+                <input type="text" name="city" id="city" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Stste:
+            </td>
+            <td >
+                <input type="text" name="state" id="state" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Zip:
+            </td>
+            <td >
+                <input type="text" name="zip" id="zip" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Country:
+            </td>
+            <td >
+                <input type="text" name="country" id="country" >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3 align="center">Profile Information</h3>
+            </td>
+        </tr>
+
+        <tr>
+            <td> Language Preference: </td>
+            <td>
+                <select name="languagepre">
+                    <option value="English">English</option>
+                    <option value="Janpenese">Janpenese</option>
+                    <option value="Chinese">Chinese</option>
+                </select>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td> Verification Code:</td>
+            <td><input type="text" name="inputCode" required></td>
+        </tr>
+        <tr>
+            <td> <img id="myImage" name="myImage" src="/account/authCode"></td>
+            <td><a href="javascript:void(0)" onclick="myReload()">uncleary!change the image</a></td>
+        </tr>
+
+
+        <tr>
+            <td > <font color="red" th:text="${reminder}">错误提示</font></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Save"></td>
+        </tr>
+    </table>
+</form>
+
+<script type = "text/javascript" src = "/js/register.js"></script>
+
+<div th:replace="/common/footer"></div>
