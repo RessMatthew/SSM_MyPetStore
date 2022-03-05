@@ -33,7 +33,7 @@ public class AccountController {
     }
 
     @GetMapping("/authCode")
-    public String authCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String authCode(HttpServletRequest request, HttpServletResponse response,Integer number) throws IOException {
         AuthCodeUtil authCodeUtil=new AuthCodeUtil();
         BufferedImage image = new BufferedImage(authCodeUtil.WIDTH,authCodeUtil.HEIGHT,BufferedImage.TYPE_INT_RGB);
         Graphics g = image.getGraphics();
