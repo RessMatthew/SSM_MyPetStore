@@ -130,6 +130,9 @@ public class CartController {
         String quantityStr = request.getParameter("quantity");
         int quantity = 0;
 
+
+        System.out.println();
+
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
