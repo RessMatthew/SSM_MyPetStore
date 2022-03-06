@@ -104,7 +104,7 @@ $(document).ready(function(){
                var  yOffset = 25;
                $("#tooltip").css("display","block").css("position","absolute").css("top",(mousePos.y - yOffset) + "px").css("left",(mousePos.x + xOffset) + "px");
                var flw = flw1+fdescription+flw2+fitemId+flw3+fattribute1+flw4+fproductname+flw5;
-               console.log(flw);
+
                $("#tooltip").empty();
                $("#tooltip").append(flw);
                $("#tooltip").hide();

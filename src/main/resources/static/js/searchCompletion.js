@@ -12,7 +12,7 @@ $("#searchbar").autocomplete({
     // "searchThis?keyword="+$("#searchbar").val(),
         function (request,response){
 
-            console.log("123");
+
 
 
         $.ajax({

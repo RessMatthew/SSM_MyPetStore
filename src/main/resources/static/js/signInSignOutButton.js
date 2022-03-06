@@ -11,10 +11,21 @@ $(document).ready(function(){
                     // window.alert(data.msg);
                     $('#signout').show();
                     $('#signin').hide();
+
+
+                    //----------------------
+                    $('#fast_signin').hide();
+                    //----------------------
+
                 }else if(data==="Not Exist"){
                     // window.alert(data.msg);
                     $('#signout').hide();
                     $('#signin').show();
+
+                    //----------------------
+                    $('#fast_signin').show();
+                    //----------------------
+
                 }
             }
         });

@@ -59,11 +59,11 @@
                         <input type="text" th:name="${cartItem.item.itemId}" th:value="${cartItem.quantity}" onblur="updateItem(this);"/>
                     </td>
                     <td>
-                        <fmt:formatNumber th:text="${cartItem.item.listPrice}" pattern="$#,##0.00"/>
+                        <fmt:formatNumber th:text="${cartItem.item.listPrice}" pattern="$#,##0"/>
                     </td>
                     <td>
-                        <div id="itemtotalcost">
-                            <fmt:formatNumber th:text="${cartItem.total}" pattern="$#,##0.00" />
+                        <div th:id="itemtotalcost+${cartItem.item.itemId}">
+                            <fmt:formatNumber th:text="${cartItem.total}" pattern="$#,##0" />
                         </div>
                     </td>
                     <td>
@@ -82,7 +82,7 @@
         </form>
 
         <p th:if="${cart.size() > 0}">
-            <a href="viewOrderForm" class="Button">Proceed to Checkout</a>
+            <a href="/order/viewOrderForm" class="Button">Proceed to Checkout</a>
         </p>
     </div>
 

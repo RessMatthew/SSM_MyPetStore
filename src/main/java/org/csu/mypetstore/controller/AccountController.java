@@ -77,6 +77,22 @@ public class AccountController {
             return "/catalog/Main";
         }
     }
+//------------------------------------------------------------------------
+    //方便测试
+    @GetMapping("/fastSignin")
+    public String fastSignin(HttpServletRequest request,Model model){
+        User user = new User();
+        user.setUsername("123");
+        user.setPassword("123");
+
+        User loginResult = userService.signin(user);
+        System.out.println("当前使用123登陆");
+        HttpSession session = request.getSession();
+        session.setAttribute("user",loginResult);
+        model.addAttribute("user",loginResult);
+        return "/catalog/Main";
+    }
+//-------------------------------------------------------------------------
 
     @GetMapping("/signout")
     public String signout(HttpServletRequest request){
@@ -160,7 +176,7 @@ public class AccountController {
         PrintWriter out = response.getWriter();
 
         if(user != null){
-            System.out.println(user.getUsername());
+
             out.print("Exist");
         }
         else {

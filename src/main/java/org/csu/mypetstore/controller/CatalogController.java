@@ -96,7 +96,6 @@ public class CatalogController {
 
         keyword=request.getParameter("keyword");
 
-        System.out.println(keyword);
 
         Product product=new Product();
         Item item=new Item();
@@ -104,7 +103,6 @@ public class CatalogController {
         List<Product> productList=new ArrayList<Product>();
         productList=service.searchProductList(keyword);
 
-        System.out.println("start");
 
         StringBuffer sb = new StringBuffer("[");
 
@@ -115,10 +113,6 @@ public class CatalogController {
                 sb.append("\"" + productList.get(i).getName() + "\",");
             }
         }
-
-        System.out.println(keyword);
-        System.out.println(productList.size());
-        System.out.println(sb.toString());
         response.getWriter().write(sb.toString());
 
     }
