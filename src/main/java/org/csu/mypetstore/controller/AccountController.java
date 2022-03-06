@@ -54,7 +54,6 @@ public class AccountController {
         return null;
     }
 
-    //刷新有问题
     @PostMapping("/signin")
     public String singin(HttpServletRequest request,String inputCode,User user,Model model){
         String msg = null;
@@ -77,22 +76,6 @@ public class AccountController {
             return "/catalog/Main";
         }
     }
-//------------------------------------------------------------------------
-    //方便测试
-    @GetMapping("/fastSignin")
-    public String fastSignin(HttpServletRequest request,Model model){
-        User user = new User();
-        user.setUsername("123");
-        user.setPassword("123");
-
-        User loginResult = userService.signin(user);
-        System.out.println("当前使用123登陆");
-        HttpSession session = request.getSession();
-        session.setAttribute("user",loginResult);
-        model.addAttribute("user",loginResult);
-        return "/catalog/Main";
-    }
-//-------------------------------------------------------------------------
 
     @GetMapping("/signout")
     public String signout(HttpServletRequest request){
@@ -124,7 +107,7 @@ public class AccountController {
     public String register(String password,String repeatpwd,HttpServletRequest request,User user,String inputCode,Model model){
         String reminder= null;
         int result = 0;
-
+        System.out.println();
         if(!password.equals(repeatpwd)){
             reminder = "两次输入密码不一致";
             model.addAttribute("reminder",reminder);
@@ -176,7 +159,7 @@ public class AccountController {
         PrintWriter out = response.getWriter();
 
         if(user != null){
-
+            System.out.println(user.getUsername());
             out.print("Exist");
         }
         else {

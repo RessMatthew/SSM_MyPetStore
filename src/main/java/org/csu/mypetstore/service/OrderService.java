@@ -12,10 +12,7 @@ import org.csu.mypetstore.persistence.impl.ItemDAOImpl;
 import org.csu.mypetstore.persistence.impl.LineItemDAOImpl;
 import org.csu.mypetstore.persistence.impl.OrderDAOImpl;
 import org.csu.mypetstore.persistence.impl.SequenceDAOImpl;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,8 +40,8 @@ public class OrderService {
             String itemId = lineItem.getItemId();
             Integer increment = new Integer(lineItem.getQuantity());
             Map<String, Object> param = new HashMap<String, Object>(2);
-            param.put("itemId", itemId);
-            param.put("increment", increment);
+            param.put("itemId", itemId);        //itemId当String放入increment当Integer放入Map
+            param.put("increment", increment);  //increment当Integer放入Map
             itemDAO.updateInventoryQuantity(param);
         }
 
@@ -91,7 +88,5 @@ public class OrderService {
         }
 
     }
-
-
 
 }

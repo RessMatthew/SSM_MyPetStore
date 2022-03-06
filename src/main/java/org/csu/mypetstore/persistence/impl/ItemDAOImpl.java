@@ -32,10 +32,14 @@ public class ItemDAOImpl implements ItemDAO {
         try {
             Connection connection = DBUtil.getConnection();
             PreparedStatement pstatement = connection.prepareStatement(updateInventoryQuantityString);
-            String itemId = (String)param.get("itemId");
+
+
+            //String itemId = param.keySet().iterator().next();//itemId当String放入increment当Integer放入Map
+
+            String itemId = (String) param.get("itemId");
             Integer increment = (Integer) param.get("increment");
-            System.out.println(increment.intValue()+itemId);
-            pstatement.setInt(1, increment.intValue());
+
+            pstatement.setInt(1, increment);
             pstatement.setString(2, itemId);
             pstatement.executeUpdate();
 

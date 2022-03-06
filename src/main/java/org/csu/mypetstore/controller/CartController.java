@@ -59,6 +59,8 @@ public class CartController {
         if(user!=null){model.addAttribute("user",user);}
 
         if(user == null){
+            String msg = "请先登录再加入购物车！";
+            model.addAttribute("msg",msg);
             return "/account/Signin";
         }
         else {
@@ -127,7 +129,6 @@ public class CartController {
         String itemId = request.getParameter("itemId");
         String quantityStr = request.getParameter("quantity");
         int quantity = 0;
-        cartService = new CartService();
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -146,11 +147,10 @@ public class CartController {
             else {
                 cartService.updateItemByItemIdAndQuantity(username, itemId, quantity);
                 CartItem item = cartService.getCartItemByUsernameAndItemId(username, itemId);
-                String html = "<fmt:formatNumber type='number' pattern='$#,##0.00'>$" + item.getTotal() + "</fmt:formatNumber>";
+                String html = "<fmt:formatNumber type='number' pattern='$#,##0.00'>$" + item.getTotal() + ".00</fmt:formatNumber>";
                 System.out.println("html"+html);
                 out.write("{\"isRemoved\":\"" + false + "\",\"itemId\":\"" + itemId + "\",\"quantity\":\"" + quantity +
                         "\",\"totalcost\":\"" + item.getTotal() + "\",\"html\":\"" + html + "\"}");
-                System.out.println(item.getTotal());
             }
         }
 

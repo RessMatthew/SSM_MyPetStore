@@ -45,11 +45,23 @@
             <td th:text="${product.name}">错误提示roduct.name</td>
         </tr>
         <tr>
-            <td th:text="'qty: '+${item1}">错误提示item1</td>
+            <td >
+                <span>qty: </span>
+                <span style="color:blue" th:text="${item1}">错误提示item1</span>
+
+            </td>
         </tr>
         <tr>
-            <td th:if="${item1} le 0">status: Back ordered</td>
-            <td th:if="${item1} gt 0">status: in stock</td>
+            <td th:if="${item1} le 0">status:
+                <span style="color:blue">
+                    Back ordered
+                </span>
+            </td>
+            <td th:if="${item1} gt 0">status:
+                <span style="color:blue">
+                   in stock
+                </span>
+            </td>
         </tr>
         <tr>
             <td>

@@ -12,7 +12,7 @@ $("#searchbar").autocomplete({
     // "searchThis?keyword="+$("#searchbar").val(),
         function (request,response){
 
-
+            //console.log("123");
 
 
         $.ajax({
@@ -21,7 +21,7 @@ $("#searchbar").autocomplete({
 
             success :function (data){
 
-                     console.log(strToJson(data));
+                     //console.log(strToJson(data));
                     response(strToJson(data));
 
             }

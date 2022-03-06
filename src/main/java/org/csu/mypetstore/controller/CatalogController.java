@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import org.csu.mypetstore.domain.Category;
 import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.Product;
-import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,22 +25,14 @@ public class CatalogController {
     @Autowired
     private CatalogService catalogService;
 
+
     @GetMapping ("/main")
-    public String loginForm(HttpServletRequest request,Model model){
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user!=null){model.addAttribute("user",user);}
+    public String loginForm(){
         return "/catalog/Main";
     }
 
     @GetMapping ("/viewCategory")
-    public String viewCatalog(Category category, Model model, HttpServletRequest request){
-
-        System.out.println("...................................................view");
-
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user!=null){model.addAttribute("user",user);}
+    public String viewCatalog(Category category, Model model){
         String categoryId=category.getCategoryId();
         Category categoryByCategoryId=catalogService.getCategory(categoryId);
         List<Product> productList=catalogService.getProductListByCategory(categoryId);
@@ -53,10 +43,7 @@ public class CatalogController {
     }
 
     @GetMapping("/viewProduct")
-    public String viewProduct(Product product, Model model,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user!=null){model.addAttribute("user",user);}
+    public String viewProduct(Product product, Model model){
         List<Item> itemList=catalogService.getItemListByProduct(product.getProductId());
         model.addAttribute("product",product);
         model.addAttribute("itemList",itemList);
@@ -64,10 +51,7 @@ public class CatalogController {
     }
 
     @GetMapping("/viewItem")
-    public String viewItem(Item item_post,Product product,Model model,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user!=null){model.addAttribute("user",user);}
+    public String viewItem(Item item_post,Product product,Model model){
         Item item=catalogService.getItem(item_post.getItemId());
         int item1=catalogService.getInventoryQuantity(item.getItemId());
 
@@ -78,10 +62,7 @@ public class CatalogController {
     }
 
     @PostMapping("/search")
-    public String searchProduct(String keyword,Model model,HttpServletRequest request){
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        if(user!=null){model.addAttribute("user",user);}
+    public String searchProduct(String keyword,Model model){
         List<Product> productList=new ArrayList<Product>();
         productList=catalogService.searchProductList(keyword);
 
@@ -91,18 +72,12 @@ public class CatalogController {
 
     @GetMapping("/searchThis")
     public void searchAutoComplete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         String keyword;
-
         keyword=request.getParameter("keyword");
-
-
         Product product=new Product();
         Item item=new Item();
-        CatalogService service=new CatalogService();
         List<Product> productList=new ArrayList<Product>();
-        productList=service.searchProductList(keyword);
-
+        productList=catalogService.searchProductList(keyword);
 
         StringBuffer sb = new StringBuffer("[");
 
@@ -114,25 +89,17 @@ public class CatalogController {
             }
         }
         response.getWriter().write(sb.toString());
-
     }
 
     @GetMapping("/fwItem")
     public void floatingWindow(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         String itemId;
         itemId=request.getParameter("itemId");
         CatalogService service=new CatalogService();
         Item item=service.getItem(itemId);
-//        int item1=service.getInventoryQuantity(itemId);
-
-
         String jsonstr = JSON.toJSONString(item);
-
         response.getWriter().write(jsonstr);
 
     }
-
-
 
 }

@@ -7,7 +7,7 @@ public class DBUtil {
     private static final String DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://127.0.1:3306/mypetstore?useSSL=false";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "xiewantong.123";
 
     //加载驱动，获得连接
     public static Connection getConnection() throws Exception{

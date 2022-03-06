@@ -16,7 +16,6 @@
     <meta http-equiv="expires" content="0" />
     <meta http-equiv="Expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="Pragma" content="no-cache" />
-
     <script src = "/jq/jquery-3.6.0.min.js"></script>
     <script src = "/jq/jquery-ui.min.js"></script>
     <script type = "text/javascript" src = "/js/authCode.js"></script>
@@ -26,7 +25,7 @@
     <script type = "text/javascript" src = "/js/signInSignOutButton.js"></script>
     <script type = "text/javascript" src = "/js/searchCompletion.js"></script>
     <script type = "text/javascript" src = "/js/floatingWindow.js"></script>
-
+    <script type = "text/javascript" src = "/js/skippingAddress.js"></script>
 
             </head>
 <body>
@@ -35,7 +34,7 @@
 
         <div id="Logo">
             <div id="LogoContent">
-                <a href="/catalog/main"><img src="/images/logo-topbar.gif"/></a>
+                <a href="main"><img src="/images/logo-topbar.gif"/></a>
             </div>
         </div>
 
@@ -46,11 +45,11 @@
 
                 <img align="middle" src="/images/separator.gif" />
 
-                <a id="signin" href="/account/viewSignin" th:if="${user}==null">Sign In</a>
+                <a id="signin" href="/account/viewSignin" th:if="${session.user}==null">Sign In</a>
 
-<!--                <img align="middle" src="/images/separator.gif" />-->
+                <img align="middle" src="/images/separator.gif" />
 
-                <a id="signout" href="/account/signout" th:if="${user}!=null">Sign Out </a>
+                <a id="signout" href="/account/signout" th:if="${session.user}!=null">Sign Out </a>
 
                 <img align="middle" src="/images/separator.gif" />
 
@@ -67,8 +66,8 @@
                 <form action="/catalog/search" method="post">
                     <input id ="searchbar" type="text" name="keyword" size="14"/>
                     <input type="submit" name="searchProducts" value="Search"/>
-                    <font color="black" th:if="${user}==null" th:text="'未登录'">未登录</font>
-                    <font color="black" th:if="${user}!=null" th:text="'用户名:'+${user.username}">未登录</font>
+                    <font color="black" th:if="${session.user}==null" th:text="'未登录'">未登录</font>
+                    <font color="black" th:if="${session.user}!=null" th:text="'用户名:'+${session.user.username}">未登录</font>
                 </form>
             </div>
         </div>

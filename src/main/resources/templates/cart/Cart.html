@@ -7,7 +7,7 @@
 
     <div id="Cart">
         <h2>Shopping Cart</h2>
-        <form action="updateCart" method="post">
+        <form action="#" method="post">
             <table id="carttable" >
                 <tr>
                     <th><b>Item ID</b></th>
@@ -59,17 +59,16 @@
                         <input type="text" th:name="${cartItem.item.itemId}" th:value="${cartItem.quantity}" onblur="updateItem(this);"/>
                     </td>
                     <td>
-                        <fmt:formatNumber th:text="${cartItem.item.listPrice}" pattern="$#,##0"/>
+                        <fmt:formatNumber th:text="${cartItem.item.listPrice}" pattern="$#,##0.00"/>
                     </td>
                     <td>
-                        <div th:id="itemtotalcost+${cartItem.item.itemId}">
-                            <fmt:formatNumber th:text="${cartItem.total}" pattern="$#,##0" />
+                        <div th:id="${cartItem.item}">
+                            <fmt:formatNumber th:text="${cartItem.total}" pattern="$#,##0.00" />
                         </div>
                     </td>
                     <td>
                         <a th:href="@{/cart/removeItemFromCart(workingItemId=${cartItem.item.itemId})}" class="Button">Remove</a>
                     </td>
-
                 </tr>
             </table>
 <!--            <table>-->
