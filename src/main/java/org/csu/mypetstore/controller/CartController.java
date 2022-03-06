@@ -150,7 +150,7 @@ public class CartController {
             else {
                 cartService.updateItemByItemIdAndQuantity(username, itemId, quantity);
                 CartItem item = cartService.getCartItemByUsernameAndItemId(username, itemId);
-                String html = "<fmt:formatNumber type='number' pattern='$#,##0.00'>$" + item.getTotal() + ".00</fmt:formatNumber>";
+                String html = "<fmt:formatNumber type='number' pattern='$#,##0.00'>$" + item.getTotal() + "</fmt:formatNumber>";
                 System.out.println("html"+html);
                 out.write("{\"isRemoved\":\"" + false + "\",\"itemId\":\"" + itemId + "\",\"quantity\":\"" + quantity +
                         "\",\"totalcost\":\"" + item.getTotal() + "\",\"html\":\"" + html + "\"}");

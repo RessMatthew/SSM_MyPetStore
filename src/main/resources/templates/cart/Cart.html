@@ -62,7 +62,7 @@
                         <fmt:formatNumber th:text="${cartItem.item.listPrice}" pattern="$#,##0.00"/>
                     </td>
                     <td>
-                        <div th:id="${cartItem.item}">
+                        <div th:id="itemtotalcost+${cartItem.item.itemId}">
                             <fmt:formatNumber th:text="${cartItem.total}" pattern="$#,##0.00" />
                         </div>
                     </td>

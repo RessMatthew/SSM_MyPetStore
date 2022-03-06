@@ -17,7 +17,7 @@ function update() {
             if(isRemoved == "false"){
                 var item = document.getElementsByName(newItem.itemId);
                 item.innerText = newItem.quantity;
-                document.getElementById("itemtotalcost").innerHTML=newItem.html;
+                document.getElementById("itemtotalcost"+newItem.itemId).innerHTML=newItem.html;
             }
             else if(isRemoved == "true"){
                 var row = document.getElementById(newItem.itemId);
