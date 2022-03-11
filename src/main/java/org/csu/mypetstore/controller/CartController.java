@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
@@ -36,10 +37,24 @@ public class CartController {
         if(user != null) {
             String username = user.getUsername();
             List<CartItem> cart = cartService.selectItemByUsername(username);
+
+
             if (cart == null) {
                 cart = new ArrayList<CartItem>();
-
             }
+
+            //用于传购物车Item每个的库存量  暂未实现 双条件 th:each
+            Iterator cartIterator = cart.iterator();
+            List<Integer> qtyList = new ArrayList<>();
+            while(cartIterator.hasNext()){
+                CartItem cartItem = (CartItem) cartIterator.next();
+                Item item = cartItem.getItem();
+                int qty=catalogService.getInventoryQuantity(item.getItemId());
+                qtyList.add(qty);
+            }
+            Iterator qtyListIterator = qtyList.iterator();
+            model.addAttribute("qtyListIterator",qtyListIterator);
+
             session.setAttribute("cart",cart);
             model.addAttribute("cart", cart);
             model.addAttribute("user",user);
@@ -85,6 +100,16 @@ public class CartController {
                 cart = new ArrayList<CartItem>();
             }
             cart = cartService.selectItemByUsername(username);
+            Iterator cartIterator = cart.iterator();
+            List<Integer> qtyList = new ArrayList<>();
+            while(cartIterator.hasNext()){
+                CartItem cartItem2 = (CartItem) cartIterator.next();
+                Item item = cartItem2.getItem();
+                int qty=catalogService.getInventoryQuantity(item.getItemId());
+                qtyList.add(qty);
+            }
+            Iterator qtyListIterator = qtyList.iterator();
+            model.addAttribute("qtyListIterator",qtyListIterator);
             session.setAttribute("cart", cart);
             model.addAttribute("cart", cart);
             return "/cart/Cart";
@@ -151,7 +176,7 @@ public class CartController {
                 cartService.updateItemByItemIdAndQuantity(username, itemId, quantity);
                 CartItem item = cartService.getCartItemByUsernameAndItemId(username, itemId);
                 String html = "<fmt:formatNumber type='number' pattern='$#,##0.00'>$" + item.getTotal() + "</fmt:formatNumber>";
-                System.out.println("html"+html);
+                //System.out.println("html"+html);
                 out.write("{\"isRemoved\":\"" + false + "\",\"itemId\":\"" + itemId + "\",\"quantity\":\"" + quantity +
                         "\",\"totalcost\":\"" + item.getTotal() + "\",\"html\":\"" + html + "\"}");
             }

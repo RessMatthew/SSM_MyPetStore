@@ -1,20 +1,21 @@
 package org.csu.mypetstore.service;
 
-import org.csu.mypetstore.persistence.UserFindDAO;
-import org.csu.mypetstore.persistence.impl.UserFindDAOImpl;
+
+import org.csu.mypetstore.persistence.UserFindMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserFindService {
-    private UserFindDAO userFindDAO;
 
-    public UserFindService(){
-        userFindDAO = new UserFindDAOImpl();
-    }
+    @Autowired
+    private UserFindMapper userFindMapper;
+
+
 
     public void deleteByUserNameAndLoginTime(String username, String loginTime){
-        userFindDAO.deleteByUserNameAndLoginTime(username, loginTime);
+        userFindMapper.deleteByUserNameAndLoginTime(username, loginTime);
     }
 
     public void insertUserFindByUserNameAndLoginTimeAndUrl(String username, String loginTime, String url){
-        userFindDAO.insertUserFindByUserNameAndLoginTimeAndUrl(username, loginTime, url);
+        userFindMapper.insertUserFindByUserNameAndLoginTimeAndUrl(username, loginTime, url);
     }
 }

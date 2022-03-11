@@ -53,6 +53,7 @@ public class CatalogController {
     @GetMapping("/viewItem")
     public String viewItem(Item item_post,Product product,Model model){
         Item item=catalogService.getItem(item_post.getItemId());
+        //库存量
         int item1=catalogService.getInventoryQuantity(item.getItemId());
 
         model.addAttribute("item",item);

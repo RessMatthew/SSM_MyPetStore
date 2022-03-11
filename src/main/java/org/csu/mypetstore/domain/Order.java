@@ -324,6 +324,7 @@ public class Order implements Serializable {
         return cartService.selectItemByUsername(username);
     }
 
+
     public BigDecimal getSubTotal(List<CartItem> cartItemList){
         BigDecimal subTotal = new BigDecimal("0");
         Iterator<CartItem> items = cartItemList.iterator();

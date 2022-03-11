@@ -26,7 +26,6 @@ public class AccountController {
     @Autowired
     private UserService userService;
 
-
     @GetMapping("/viewSignin")
     public String viewSignin(){
         return "account/Signin";
@@ -77,23 +76,20 @@ public class AccountController {
         }
     }
 
-    //------------------------------------------------------------------------
-    //方便测试
+
     @GetMapping("/fastSignin")
-    public String fastSignin(HttpServletRequest request,Model model){
+    public String fastSignin(HttpServletRequest request,HttpSession session,Model model){
         User user = new User();
         user.setUsername("123");
         user.setPassword("123");
 
         User loginResult = userService.signin(user);
         System.out.println("当前使用123登陆");
-        HttpSession session = request.getSession();
+        //HttpSession session = request.getSession();
         session.setAttribute("user",loginResult);
         model.addAttribute("user",loginResult);
         return "/catalog/Main";
     }
-//-------------------------------------------------------------------------
-
 
     @GetMapping("/signout")
     public String signout(HttpServletRequest request){
@@ -124,7 +120,7 @@ public class AccountController {
     @PostMapping("/register")
     public String register(String password,String repeatpwd,HttpServletRequest request,User user,String inputCode,Model model){
         String reminder= null;
-        int result = 0;
+        boolean result = false;
         System.out.println();
         if(!password.equals(repeatpwd)){
             reminder = "两次输入密码不一致";
@@ -139,7 +135,7 @@ public class AccountController {
             model.addAttribute("reminder", reminder);
             return "/account/Register";
         }
-        else if (result == 1) {
+        else if (result == true) {
             HttpSession session = request.getSession();
             session.setAttribute("user",user);
             return "/catalog/Main";
@@ -154,8 +150,8 @@ public class AccountController {
     @PostMapping("/saveAccount")
     public String saveAccount(String password,String repeatpwd,Model model,HttpServletRequest request,User user){
         String message = null;
-        int result = userService.updateUserByUsername(user);
-        if(result == 1){
+        boolean result = userService.updateUserByUsername(user);
+        if(result == true){
             request.getSession().setAttribute("user",user);
             return "/catalog/Main";
         }
@@ -177,7 +173,7 @@ public class AccountController {
         PrintWriter out = response.getWriter();
 
         if(user != null){
-            System.out.println(user.getUsername());
+            //System.out.println(user.getUsername());
             out.print("Exist");
         }
         else {

@@ -1,31 +1,30 @@
 package org.csu.mypetstore.service;
 
 import org.csu.mypetstore.domain.User;
-import org.csu.mypetstore.persistence.UserDAO;
-import org.csu.mypetstore.persistence.impl.UserDAOImpl;
+import org.csu.mypetstore.persistence.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private UserDAO userDAO;
 
-    public UserService(){
-        userDAO = new UserDAOImpl();
-    }
+    @Autowired
+    private UserMapper userMapper;
+
 
     public User findUserByUsername(String username){
-        return userDAO.findUserByUsername(username);
+        return userMapper.findUserByUsername(username);
     }
 
-    public int updateUserByUsername(User user){
-        return userDAO.updateUserByUsername(user);
+    public boolean updateUserByUsername(User user){
+        return userMapper.updateUserByUsername(user);
     }
 
     public User signin(User user){
-        return userDAO.findUserByUsernameAndPassword(user);
+        return userMapper.findUserByUsernameAndPassword(user);
     }
 
-    public int register(User user){
-        return userDAO.insertUserByUsernameAndPassword(user);
+    public boolean register(User user){
+        return userMapper.insertUserByUsernameAndPassword(user);
     }
 }

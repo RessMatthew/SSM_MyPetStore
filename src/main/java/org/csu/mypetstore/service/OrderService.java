@@ -4,14 +4,10 @@ import org.csu.mypetstore.domain.Item;
 import org.csu.mypetstore.domain.LineItem;
 import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.domain.Sequence;
-import org.csu.mypetstore.persistence.ItemDAO;
-import org.csu.mypetstore.persistence.LineItemDAO;
-import org.csu.mypetstore.persistence.OrderDAO;
-import org.csu.mypetstore.persistence.SequenceDAO;
+import org.csu.mypetstore.persistence.*;
 import org.csu.mypetstore.persistence.impl.ItemDAOImpl;
 import org.csu.mypetstore.persistence.impl.LineItemDAOImpl;
-import org.csu.mypetstore.persistence.impl.OrderDAOImpl;
-import org.csu.mypetstore.persistence.impl.SequenceDAOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,15 +17,15 @@ import java.util.Map;
 public class OrderService {
 
     private ItemDAO itemDAO;
-    private OrderDAO orderDAO;
-    private SequenceDAO sequenceDAO;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private SequenceMapper sequenceMapper;
     private LineItemDAO lineItemDAO;
 
     public OrderService(){
         itemDAO = new ItemDAOImpl();
-        orderDAO = new OrderDAOImpl();
         lineItemDAO = new LineItemDAOImpl();
-        sequenceDAO = new SequenceDAOImpl();
 
     }
 
@@ -45,8 +41,8 @@ public class OrderService {
             itemDAO.updateInventoryQuantity(param);
         }
 
-        orderDAO.insertOrder(order);
-        orderDAO.insertOrderStatus(order);
+        orderMapper.insertOrder(order);
+        orderMapper.insertOrderStatus(order);
         for (int i = 0; i < order.getLineItems().size(); i++) {
             LineItem lineItem = (LineItem) order.getLineItems().get(i);
             lineItem.setOrderId(order.getOrderId());
@@ -56,7 +52,7 @@ public class OrderService {
 
 
     public Order getOrder(int orderId) {
-        Order order = orderDAO.getOrder(orderId);
+        Order order = orderMapper.getOrder(orderId);
         order.setLineItems(lineItemDAO.getLineItemsByOrderId(orderId));
 
         for (int i = 0; i < order.getLineItems().size(); i++) {
@@ -70,23 +66,19 @@ public class OrderService {
     }
 
     public List<Order> getOrdersByUsername(String username) {
-        return orderDAO.getOrdersByUsername(username);
+        return orderMapper.getOrdersByUsername(username);
     }
 
     public int getNextId(String name) {
         Sequence sequence = new Sequence(name, -1);
-        sequence = (Sequence) sequenceDAO.getSequence(sequence);
+        sequence = this.sequenceMapper.getSequence(sequence);
         if (sequence == null) {
-            throw new RuntimeException("Error: A null sequence was returned from the database (could not get next " + name
-                    + " sequence).");
+            throw new RuntimeException("Error: A null sequence was returned from the database (could not get next " + name + " sequence).");
+        } else {
+            Sequence parameterObject = new Sequence(name, sequence.getNextId() + 1);
+            this.sequenceMapper.updateSequence(parameterObject);
+            return sequence.getNextId();
         }
-        Sequence parameterObject = new Sequence(name, sequence.getNextId() + 1);
-        if(sequenceDAO.updateSequence(parameterObject)){
-            return parameterObject.getNextId();
-        }else {
-            throw new RuntimeException("Can't updateSequence!");
-        }
-
     }
 
 }

@@ -29,7 +29,7 @@
     <!--    =============================================================================-->
     <!--    方便测试用-->
     <div id="fast_signin">
-        <a type="button" href="/account/fastSignin">Click here to fast signin</a>
+        <a type="button" href="/account/fastSignin" th:if="${session.user}==null">Click here to fast signin</a>
     </div>
     <!--    =============================================================================-->
 

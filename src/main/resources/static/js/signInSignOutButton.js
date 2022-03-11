@@ -1,3 +1,4 @@
+/*
 $(document).ready(function(){
 
     $("#signout").hide();
@@ -19,13 +20,4 @@ $(document).ready(function(){
             }
         });
 
-            // var user = '<%= session.getAttribute("user")%>';
-            //
-            // if(user!=null){
-            //     $('#signout').show();
-            //     $('#signin').hide();
-            // }else{
-            //     $('#signout').hide();
-            //     $('#signin').show();
-            // }
-})
+})*/

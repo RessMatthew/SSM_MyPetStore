@@ -52,7 +52,7 @@
                                       th:text="${cartItem.item.attribute5}">
                         </span>
                     </td>
-                    <td th:text="${cartItem.inStock}">
+                    <td th:text="${cartItem.inStock}+'&qty: '+${qtyListIterator.next()}">
                         错误提示cartItem.inStock
                     </td>
                     <td>
