@@ -27,6 +27,7 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
     @Autowired
     private CatalogService catalogService;
 
@@ -117,7 +118,7 @@ public class CartController {
     }
 
     @GetMapping("/removeItemFromCart")
-    public String removeItemFromCart(String workingItemId,HttpServletRequest request,Model model){
+    public String removeItemFromCart(String itemId,HttpServletRequest request,Model model){
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if(user!=null){model.addAttribute("user",user);}
@@ -128,14 +129,24 @@ public class CartController {
         }
         else {
             String username = user.getUsername();
-            CartItem cartItem = cartService.getCartItemByUsernameAndItemId(username, workingItemId);
+            CartItem cartItem = cartService.getCartItemByUsernameAndItemId(username, itemId);
             if (cartItem == null) {
                 String msg="Attempted to remove all null CartItem from Cart.";
                 model.addAttribute("msg",msg);
                 return "common/Error";
             } else {
-                cartService.removeCartItemByUsernameAndItemId(username, workingItemId);
+                cartService.removeCartItemByUsernameAndItemId(username, itemId);
                 List<CartItem> cart = cartService.selectItemByUsername(username);
+                Iterator cartIterator = cart.iterator();
+                List<Integer> qtyList = new ArrayList<>();
+                while(cartIterator.hasNext()){
+                    CartItem cartItem2 = (CartItem) cartIterator.next();
+                    Item item = cartItem2.getItem();
+                    int qty=catalogService.getInventoryQuantity(item.getItemId());
+                    qtyList.add(qty);
+                }
+                Iterator qtyListIterator = qtyList.iterator();
+                model.addAttribute("qtyListIterator",qtyListIterator);
                 session.setAttribute("cart", cart);
                 model.addAttribute("cart",cart);
                 return "/cart/Cart";

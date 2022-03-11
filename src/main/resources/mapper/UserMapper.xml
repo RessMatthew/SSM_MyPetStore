@@ -5,7 +5,7 @@
 <mapper namespace="org.csu.mypetstore.persistence.UserMapper">
 
     <select id="findUserByUsername" parameterType="String" resultType="User">
-        select * from user where #{username} = ?
+        select * from user where username = #{username}
     </select>
 
     <update id="updateUserByUsername" parameterType="User">

@@ -4,6 +4,69 @@ import java.math.BigDecimal;
 import java.util.*;
 
 public class Cart {
+    private String username;
+    private String itemId;
+    private boolean instock;
+    private int quantity;
+    private BigDecimal totalCost;
+    private boolean pay;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getItemid() {
+        return itemId;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemId = itemid;
+    }
+
+    public boolean isInstock() {
+        return instock;
+    }
+
+    public void setInstock(boolean instock) {
+        this.instock = instock;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public BigDecimal getTotalcost() {
+        return totalCost;
+    }
+
+    public void setTotalcost(BigDecimal totalcost) {
+        this.totalCost = totalcost;
+    }
+
+    public boolean getPay() {
+        return pay;
+    }
+
+    public void setPay(boolean pay) {
+        this.pay = pay;
+    }
+
+    public Map<String, CartItem> getItemMap() {
+        return itemMap;
+    }
+
+    public List<CartItem> getItemList() {
+        return itemList;
+    }
+
     private final Map<String,CartItem> itemMap = Collections.synchronizedMap(new HashMap<String ,CartItem>());
     private final List<CartItem> itemList = new ArrayList<CartItem>();
 

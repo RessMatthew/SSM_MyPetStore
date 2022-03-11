@@ -76,7 +76,6 @@ public class AccountController {
         }
     }
 
-
     @GetMapping("/fastSignin")
     public String fastSignin(HttpServletRequest request,HttpSession session,Model model){
         User user = new User();
@@ -190,7 +189,6 @@ public class AccountController {
     public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String username = request.getParameter("username");
-        userService = new UserService();
         User user = userService.findUserByUsername(username);
 
         response.setContentType("text/plain");

@@ -5,6 +5,7 @@ import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.service.CartService;
 import org.csu.mypetstore.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private CartService cartService;
 
     @GetMapping("/viewOrderForm")
     public String viewOrderForm(HttpServletRequest request){
@@ -114,9 +121,7 @@ public class OrderController {
         HttpSession session = request.getSession();
         Order order = (Order) session.getAttribute("order");
         session.setAttribute("lineItems",order.getLineItems());
-        OrderService orderService = new OrderService();
         orderService.insertOrder(order);
-        CartService cartService = new CartService();
         User user = (User) session.getAttribute("user");
         String username = user.getUsername();
         List<CartItem> cart = (List<CartItem>)session.getAttribute("cart");

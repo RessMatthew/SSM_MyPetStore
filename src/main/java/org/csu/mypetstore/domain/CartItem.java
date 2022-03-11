@@ -6,15 +6,15 @@ public class CartItem {
     private String username;
     private Item item;
     private int quantity;
-    private boolean inStock;
-    private BigDecimal total;
+    private boolean instock;
+    private BigDecimal totalCost;
     private boolean pay;
     public BigDecimal getTotal() {
-        return total;
+        return totalCost;
     }
 
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+    public void setTotal(BigDecimal totalCost) {
+        this.totalCost = totalCost;
     }
 
     public Item getItem() {
@@ -35,19 +35,19 @@ public class CartItem {
     }
 
     public boolean isInStock() {
-        return inStock;
+        return instock;
     }
 
     public void setInStock(boolean inStock) {
-        this.inStock = inStock;
+        this.instock = inStock;
     }
 
     private void calculateTotal(){
         if(item != null && item.getListPrice() != null){
-            total = item.getListPrice().multiply(new BigDecimal(quantity));
+            totalCost = item.getListPrice().multiply(new BigDecimal(quantity));
         }
         else{
-            total = null;
+            totalCost = null;
         }
     }
 

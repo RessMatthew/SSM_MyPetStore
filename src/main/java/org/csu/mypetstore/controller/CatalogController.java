@@ -96,8 +96,8 @@ public class CatalogController {
     public void floatingWindow(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String itemId;
         itemId=request.getParameter("itemId");
-        CatalogService service=new CatalogService();
-        Item item=service.getItem(itemId);
+
+        Item item=catalogService.getItem(itemId);
         String jsonstr = JSON.toJSONString(item);
         response.getWriter().write(jsonstr);
 

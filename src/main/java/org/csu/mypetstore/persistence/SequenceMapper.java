@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SequenceMapper {
-    Sequence getSequence(Sequence var1);
 
-    void updateSequence(Sequence var1);
+    Sequence getSequence(Sequence var1);
+    boolean updateSequence(Sequence var1);
 }
