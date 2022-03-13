@@ -7,7 +7,7 @@
         delete from log where username=#{username} and logintime=#{logintime}
     </delete>
     <insert id="insertUserFindByUserNameAndLoginTimeAndUrl" parameterType="String">
-        insert into log(username,logintime,url) " +
-            "values(#{username},#{logintime},#{url})
+        insert into log(username,logintime,url)
+            values(#{username},#{logintime},#{url})
     </insert>
 </mapper>
