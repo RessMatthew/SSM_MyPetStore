@@ -41,7 +41,10 @@ public class AccountController {
         authCodeUtil.setBorder(g);
         authCodeUtil.setRandomLine(g);
         authCode = authCodeUtil.setWriteDate(g);
+        System.out.println("*******************************************");
         System.out.println("当前验证码："+authCode);
+        System.out.println("*******************************************");
+
 
         request.getSession().setAttribute("authCode",authCode);
         response.setContentType("image/jpeg");
@@ -193,8 +196,6 @@ public class AccountController {
 
         response.setContentType("text/plain");
         PrintWriter out = response.getWriter();
-
-        System.out.println(username);
 
         if(username==""){
             out.print("Empty");
