@@ -90,13 +90,13 @@ th {
 }
 
 a, a:visited, a:link {
-    color: #4f5d50;
+    color: #ae8073;
     text-decoration: none;
     font-family: helvetica, tahoma, arial, verdana, sans-serif;
 }
 
 a:hover {
-    color: #adba96;
+    color: #eaac00;
 }
 
 a.Button, a.Button:link, a.Button:visited {
@@ -325,7 +325,7 @@ sub{
 #Cart{
     width: 69.99%;
     float: left;
-    background-color:#fff;
+    background-color:#d6dac5;
 }
 
 #MyList{
