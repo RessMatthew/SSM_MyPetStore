@@ -61,7 +61,39 @@ $(document).ready(function(){
             }
         });
 
-    })
+    });
+
+    $('#phoneCode').off("click"); //解除绑定点击事件
+
+    $('#phoneCode').unbind("click");//移除绑定点击事件
+
+    $('#phoneCode').unbind(); //移除所有绑定事件
+
+    $('#phoneCode').on("click",function (){
+
+        var p = $('#phoneNumber').val();
+        var data = "phoneNumber="+ p;
+        console.log(data);
+        $.ajax({
+
+            type    :"POST",
+            url     :"/account/phoneVCode",
+            data    :data,
+
+            success :function (data){
+                console.log("success Phone VCode");
+
+
+
+            },
+            error :function (data){
+                window.alert(data);
+            }
+
+
+        });
+    });
+
 
 });
 

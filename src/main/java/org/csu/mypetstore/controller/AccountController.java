@@ -1,5 +1,6 @@
 package org.csu.mypetstore.controller;
 
+import com.zhenzi.sms.ZhenziSmsClient;
 import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.service.UserService;
 import org.csu.mypetstore.util.AuthCodeUtil;
@@ -12,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
@@ -25,6 +27,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 @Controller
@@ -128,10 +132,11 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public String register(String password,String repeatpwd,HttpServletRequest request,User user,String inputCode,Model model){
+    public String register(String password,String repeatpwd,HttpServletRequest request,User user,String inputCode,String inputVCode,Model model){
         String reminder= null;
         boolean result = false;
-        System.out.println();
+        System.out.println(inputVCode);
+
         if(!password.equals(repeatpwd)){
             reminder = "两次输入密码不一致";
             model.addAttribute("reminder",reminder);
@@ -139,9 +144,16 @@ public class AccountController {
         }
 
         String authCode = (String)request.getSession().getAttribute("authCode");
+        String vCode = (String)request.getSession().getAttribute("vCode");
+        System.out.println(vCode);
         result = userService.register(user);
         if(!authCode.equals((inputCode))){
             reminder = "验证码有误，请重新输入！";
+            model.addAttribute("reminder", reminder);
+            return "/account/Register";
+        }
+        else if(!inputVCode.equals(vCode)){
+            reminder = "手机验证码有误，请重新输入！";
             model.addAttribute("reminder", reminder);
             return "/account/Register";
         }
@@ -262,5 +274,49 @@ public class AccountController {
         }
 
     }
+
+    @PostMapping("/phoneVCode")
+    @ResponseBody
+    public void phoneCode(HttpServletRequest request,String phoneNumber){
+
+        System.out.println("1");
+        System.out.println(phoneNumber);
+
+        String apiUrl = "https://sms_developer.zhenzikj.com";
+        String appId  = "111103";
+        String appSecret = "761719c1-e3cc-41dc-9074-01744465caad";
+        String reminder = null;
+        String vCode = null;
+
+
+
+        try{
+
+            vCode = RandomNumberUtil.getRandomNumber();
+
+            ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("number", phoneNumber);
+            params.put("templateId", "8485");
+            String[] templateParams = new String[2];
+            templateParams[0] = vCode;
+            System.out.println(vCode);
+            templateParams[1] = "5分钟";
+            params.put("templateParams", templateParams);
+            String result = client.send(params);
+
+            reminder = "验证码发送成功";
+            request.setAttribute("reminder",reminder);
+            request.getSession().setAttribute("vCode",vCode);
+
+            System.out.println(result);
+            }catch (Exception e) {
+            e.printStackTrace();
+            request.getSession().setAttribute("error","验证码发送失败");
+        }
+    }
+
+
 
 }
