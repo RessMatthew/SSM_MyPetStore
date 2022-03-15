@@ -352,6 +352,14 @@ input[type="submit"]{
     padding: 6px 16px;
 }
 
+input[type="button"]{
+    color: #3f564c;
+    font-size: 2ex;
+    background-color: #d6d9c5;
+    border-radius: 20px;
+    padding: 6px 16px;
+}
+
 /* css for table*/
 table{
     background-color: #a9b6a4;
