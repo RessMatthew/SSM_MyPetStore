@@ -20,6 +20,13 @@ public class UserService {
     }
 
     public boolean updateUserByUsername(User user){
+        String inputPassword = user.getPassword();
+        String MD5Password = MD5Util.inputPassToDBPass(inputPassword,salt);
+        System.out.println("*******************************************");
+        System.out.println("输入密码： "+inputPassword+"  MD5加密后： "+MD5Password);
+        System.out.println("*******************************************");
+
+        user.setPassword(MD5Password);
         return userMapper.updateUserByUsername(user);
     }
 
