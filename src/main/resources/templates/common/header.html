@@ -58,6 +58,10 @@
 
                 <img align="middle" src="/images/separator.gif" />
 
+                <a href="/account/refresh">Refresh</a>
+
+                <img align="middle" src="/images/separator.gif" />
+
             </div>
         </div>
 
@@ -75,23 +79,33 @@
 
 
         <div id="QuickLinks">
-            <a href="/catalog/viewCategory?categoryId=FISH"><img src="/images/sm_fish.gif"/></a>
+<!--            <a href="/catalog/viewCategory?categoryId=FISH"><img src="/images/sm_fish.gif"/></a>-->
 
+<!--            <img src="/images/separator.gif"/>-->
+
+<!--            <a href="/catalog/viewCategory?categoryId=DOGS"><img src="/images/sm_dogs.gif"/></a>-->
+
+<!--            <img src="/images/separator.gif"/>-->
+
+<!--            <a href="/catalog/viewCategory?categoryId=REPTILES"><img src="/images/sm_reptiles.gif"/></a>-->
+
+<!--            <img src="/images/separator.gif"/>-->
+
+<!--            <a href="/catalog/viewCategory?categoryId=CATS"><img src="/images/sm_cats.gif"/></a>-->
+
+<!--            <img src="/images/separator.gif"/>-->
+
+<!--            <a href="/catalog/viewCategory?categoryId=BIRDS"><img src="/images/sm_birds.gif"/></a>-->
             <img src="/images/separator.gif"/>
-
-            <a href="/catalog/viewCategory?categoryId=DOGS"><img src="/images/sm_dogs.gif"/></a>
-
             <img src="/images/separator.gif"/>
-
-            <a href="/catalog/viewCategory?categoryId=REPTILES"><img src="/images/sm_reptiles.gif"/></a>
-
-            <img src="/images/separator.gif"/>
-
-            <a href="/catalog/viewCategory?categoryId=CATS"><img src="/images/sm_cats.gif"/></a>
-
-            <img src="/images/separator.gif"/>
-
-            <a href="/catalog/viewCategory?categoryId=BIRDS"><img src="/images/sm_birds.gif"/></a>
+            <a th:if="${session.allCategoryList.size()} == 0 ">No Categor</a>
+            <span th:if="${session.allCategoryList.size()} > 0" >
+                <span th:each="Category:${session.allCategoryList}">
+                    <a th:text="${Category.categoryId}" th:href="@{/catalog/viewCategory(categoryId=${Category.categoryId})}"></a>
+                    <img src="/images/separator.gif"/>
+                </span>
+                <img src="/images/separator.gif"/>
+            </span>
         </div>
 
     </div>

@@ -55,12 +55,15 @@ public class CatalogService {
     }
 
     public int getInventoryQuantity(String itemId){return itemMapper.getInventoryQuantity(itemId);}
+
     public boolean isItemInStock(String itemId)
     {
         return  itemMapper.getInventoryQuantity(itemId)>0;
     }
 
-
+    public List<Category> getAllCategoryList(){
+        return categoryMapper.getCategoryList();
+    }
 
 
 

@@ -105,6 +105,14 @@ public class AccountController {
         return "/catalog/Main";
     }
 
+    @GetMapping("/refresh")
+    public String refresh(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)request.getSession().getAttribute("user");
+        session.setAttribute("user",user);
+        return "redirect:/catalog/main";
+    }
+
     @GetMapping("/signout")
     public String signout(HttpServletRequest request){
         if(request.getSession().getAttribute("user") != null) {

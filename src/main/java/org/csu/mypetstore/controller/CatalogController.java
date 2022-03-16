@@ -11,15 +11,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/catalog")
+@SessionAttributes("allCategoryList")
 public class CatalogController {
 
     @Autowired
@@ -27,7 +30,10 @@ public class CatalogController {
 
 
     @GetMapping ("/main")
-    public String loginForm(){
+    public String loginForm(Model model){
+        List<Category> allCategoryList = catalogService.getAllCategoryList();
+        model.addAttribute("allCategoryList",allCategoryList);
+
         return "/catalog/Main";
     }
 
