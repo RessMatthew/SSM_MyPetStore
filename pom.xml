@@ -34,8 +34,14 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+<!--        阿里支付接口-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.22.37.ALL</version>
+        </dependency>
 
-<!--        榛子云-->
+        <!--        榛子云-->
 
         <dependency>
             <groupId>com.zhenzikj</groupId>

@@ -1,16 +1,21 @@
 package org.csu.mypetstore.controller;
 
+import com.alipay.api.AlipayApiException;
 import org.csu.mypetstore.domain.CartItem;
 import org.csu.mypetstore.domain.Order;
 import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.service.CartService;
 import org.csu.mypetstore.service.OrderService;
+import org.csu.mypetstore.service.PayService;
+import org.csu.mypetstore.vo.OrderVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -25,6 +30,9 @@ public class OrderController {
 
     @Autowired
     private CartService cartService;
+
+    @Resource
+    private PayService payService;//调用支付服务
 
     @GetMapping("/viewOrderForm")
     public String viewOrderForm(HttpServletRequest request){
@@ -73,6 +81,8 @@ public class OrderController {
             //覆盖原来的order
             session.setAttribute("order",order);
 
+
+
             return "order/confirmOrder";
         }else{
             HttpSession session = request.getSession();
@@ -116,8 +126,9 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/finalOrder")
-    public String order(HttpServletRequest request){
+    @PostMapping("/finalOrder")
+    @ResponseBody
+    public String order(HttpServletRequest request) throws AlipayApiException {
         HttpSession session = request.getSession();
         Order order = (Order) session.getAttribute("order");
         session.setAttribute("lineItems",order.getLineItems());
@@ -131,6 +142,20 @@ public class OrderController {
         }
         session.removeAttribute("cart");
 
+        return  payService.aliPay(new OrderVo()
+                .setBody(order.getUsername())
+                .setOut_trade_no(order.getLineItems().get(0).getItemId())
+                .setTotal_amount(new StringBuffer().append(order.getTotalPrice()))
+                .setSubject("MyPetStore Order"));
+    }
+
+    @GetMapping("/return")
+    public String PayReturn(){
         return "/order/ViewOrder";
+    }
+
+    @GetMapping("/notify")
+    public String PayNotify(){
+        return "支付失败";
     }
 }

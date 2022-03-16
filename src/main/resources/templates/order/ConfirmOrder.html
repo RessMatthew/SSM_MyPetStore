@@ -5,7 +5,7 @@
 
 <div id="Catalog">
     Please confirm the information below and then press continue...
-
+    <form action="/order/finalOrder" method="post">
     <table>
         <tr>
             <th align="center" colspan="2">
@@ -94,9 +94,9 @@
 
     </table>
 
-    <a href="/order/finalOrder">
-        <input type="submit" name="confirmed" value="confirmed">
-    </a>
+        <input type="submit" name="confirmed" value="支付宝支付">
+
+    </form>
 </div>
 
 <div th:replace="/common/footer"></div>
