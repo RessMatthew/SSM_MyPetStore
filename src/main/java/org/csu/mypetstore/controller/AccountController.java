@@ -325,6 +325,59 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/passwordMSG")
+    @ResponseBody
+    public String passwordMSG(HttpServletRequest request,String phoneNumber,String username,Model model){
+
+
+
+        String apiUrl = "https://sms_developer.zhenzikj.com";
+        String appId  = "111103";
+        String appSecret = "761719c1-e3cc-41dc-9074-01744465caad";
+        String newPassword = null;
+
+
+        User user = userService.findUserByUsername(username);
+
+        if(user==null){
+            return "用户名不存在！";
+        }else if(!user.getPhone().equals(phoneNumber)){
+            return "用户名与手机号不匹配！";
+        }else{
+
+            try{
+
+                newPassword = RandomNumberUtil.getRandomNumber();
+                newPassword += RandomNumberUtil.getRandomNumber();
+
+                ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
+
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.put("number", phoneNumber);
+                params.put("templateId", "8515");
+                String[] templateParams = new String[2];
+                templateParams[0] = newPassword;
+                System.out.println();
+//            templateParams[1] = "5分钟";
+                params.put("templateParams", templateParams);
+                String result = client.send(params);
+
+                System.out.println(result);
+
+                return "新密码已经发送至手机，请注意查收";
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                request.getSession().setAttribute("error","验证码发送失败");
+                return "出问题了-_-";
+            }
+
+
+        }
+
+
+
+    }
 
 
 }
