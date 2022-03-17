@@ -320,7 +320,6 @@ sub{
     border-width: .1ex 0ex .1ex 0px;
     border-style: solid;
     border-color: #000;
-    position: absolute;
 }
 
 #Cart{
@@ -404,6 +403,19 @@ table a:hover{
 }
 
 .login-box {
+    text-align: center;
+    width: 500px;
+    height: 350px;
+    border-radius: 10px;
+    /*border: 3px solid gainsboro;*/
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 996;  /* 此处的图层要大于遮罩图层 */
+}
+
+.login-box-email {
     text-align: center;
     width: 500px;
     height: 350px;

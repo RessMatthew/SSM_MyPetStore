@@ -3,10 +3,7 @@ package org.csu.mypetstore.controller;
 import com.zhenzi.sms.ZhenziSmsClient;
 import org.csu.mypetstore.domain.User;
 import org.csu.mypetstore.service.UserService;
-import org.csu.mypetstore.util.AuthCodeUtil;
-import org.csu.mypetstore.util.JavaMailUtil;
-import org.csu.mypetstore.util.RandomNumberUtil;
-import org.csu.mypetstore.util.htmlText;
+import org.csu.mypetstore.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -307,10 +304,9 @@ public class AccountController {
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("number", phoneNumber);
             params.put("templateId", "8485");
-            String[] templateParams = new String[2];
+            String[] templateParams = new String[1];
             templateParams[0] = vCode;
             System.out.println(vCode);
-            templateParams[1] = "5分钟";
             params.put("templateParams", templateParams);
             String result = client.send(params);
 
@@ -348,17 +344,17 @@ public class AccountController {
             try{
 
                 newPassword = RandomNumberUtil.getRandomNumber();
-                newPassword += RandomNumberUtil.getRandomNumber();
+
 
                 ZhenziSmsClient client = new ZhenziSmsClient(apiUrl, appId, appSecret);
 
                 Map<String, Object> params = new HashMap<String, Object>();
                 params.put("number", phoneNumber);
                 params.put("templateId", "8515");
-                String[] templateParams = new String[2];
+                String[] templateParams = new String[1];
                 templateParams[0] = newPassword;
                 System.out.println();
-//            templateParams[1] = "5分钟";
+
                 params.put("templateParams", templateParams);
                 String result = client.send(params);
 
@@ -382,5 +378,70 @@ public class AccountController {
 
     }
 
+
+    @PostMapping("/passwordMSGMAIL")
+    @ResponseBody
+    public String passwordMSGMAIL(HttpServletRequest request,String email,String username,Model model){
+
+
+
+        String apiUrl = "https://sms_developer.zhenzikj.com";
+        String appId  = "111103";
+        String appSecret = "761719c1-e3cc-41dc-9074-01744465caad";
+        String newPassword = null;
+
+
+        User user = userService.findUserByUsername(username);
+
+        if(user==null){
+            return "用户名不存在！";
+        }else if(!user.getEmail().equals(email)){
+            return "用户名与邮箱不匹配！";
+        }else{
+
+            try{
+
+                newPassword = RandomNumberUtil.getRandomNumber();
+                newPassword += RandomNumberUtil.getRandomNumber();
+
+
+
+                JavaMailUtil.receiveMailAccount = email;
+
+                Properties pops = new Properties();
+                pops.setProperty("mail.debug","true");
+                pops.setProperty("mail.smtp.auth","true");
+                pops.setProperty("mail.host",JavaMailUtil.emailSMTPHost);
+                pops.setProperty("mail.transport.protocol","smtp");
+                Session session = Session.getInstance(pops);
+                session.setDebug(true);
+                String html = htmlTextResetPSW.htmlTextResetPSW(newPassword);
+                MimeMessage message = JavaMailUtil.creatMimeMessage(session, JavaMailUtil.emailAccount,
+                        JavaMailUtil.receiveMailAccount,html);
+                Transport transport = session.getTransport();
+                transport.connect(JavaMailUtil.emailAccount,JavaMailUtil.emailPassword);
+                transport.sendMessage(message,message.getAllRecipients());
+                transport.close();
+
+
+
+
+                user.setPassword(newPassword);
+                userService.updateUserByUsername(user);
+
+                return "新密码已经发送至邮箱，请注意查收";
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                request.getSession().setAttribute("error","验证码发送失败");
+                return "出问题了-_-";
+            }
+
+
+        }
+
+
+
+    }
 
 }
