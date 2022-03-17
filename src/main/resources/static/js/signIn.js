@@ -1,9 +1,11 @@
 $(document).ready(function() {
 
+    $('#signInPhoneForm').hide();
+
     $('#loginThroughPhone').click(function (){
 
-        $('#signInPasswordForm').hide();
         $('#signInPhoneForm').show();
+        $('#signInPasswordForm').hide();
 
     })
 
