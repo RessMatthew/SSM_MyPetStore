@@ -364,6 +364,9 @@ public class AccountController {
 
                 System.out.println(result);
 
+                user.setPassword(newPassword);
+                userService.updateUserByUsername(user);
+
                 return "新密码已经发送至手机，请注意查收";
 
             }catch (Exception e) {
