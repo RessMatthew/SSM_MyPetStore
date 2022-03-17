@@ -388,7 +388,7 @@ table a:hover{
     color: #54c07a;
 }
 
-/* 半透明的遮罩层 */
+/* 忘记 密码的卡片 */
 .shadow {
     background: #000;
     filter: alpha(opacity=70); /* IE的透明度 */

@@ -1,4 +1,4 @@
-//登录，点击登录显示登录框
+//忘记密码
 
 $(document).ready(function() {
 

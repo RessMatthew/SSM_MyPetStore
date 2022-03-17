@@ -4,7 +4,7 @@
     <a href="/catalog/main">Return to Main Menu</a>
 </div>
 <font color="red" th:if="${msg}!=null" th:text="${msg}"></font>
-<form action="/account/signin" method="post">
+<form action="/account/signin" method="post" id="signInPasswordForm">
     <div id="Sign">
         <table align="center">
             <tr>
@@ -30,11 +30,51 @@
 
             <tr>
                 <td> <input type="submit" value="Signin"></td>
+                <td> <input type="button" value="through Phone" id="loginThroughPhone"></td>
+
             </tr>
 
         </table>
     </div>
 </form>
+<form action="/account/signinPhone" method="post" style="display: none" id="signInPhoneForm">
+    <div id="SignPhone">
+        <table align="center">
+
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="username" required="required"></td>
+
+            </tr>
+
+            <tr>
+                <td>PhoneNumber:</td>
+                <td><input type="text" name="phoneNumber" id="phoneNumber" required="required"></td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="button"id="phoneCode" value="Send phoneCode">
+                </td>
+                <td>
+                    <input type="text" id="phoneVCode" name="inputVCode" value="">
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td> <input type="submit" value="Signin"></td>
+                <td> <input type="button" value="through Password" id="loginThroughPassword"></td>
+            </tr>
+
+        </table>
+    </div>
+</form>
+
+
 <p align="center">
     Need a username and password?<a href="/account/viewRegister">Resgister Now!</a>
 </p>
