@@ -131,16 +131,6 @@ public class OrderController {
     public String order(HttpServletRequest request) throws AlipayApiException {
         HttpSession session = request.getSession();
         Order order = (Order) session.getAttribute("order");
-        session.setAttribute("lineItems",order.getLineItems());
-        orderService.insertOrder(order);
-        User user = (User) session.getAttribute("user");
-        String username = user.getUsername();
-        List<CartItem> cart = (List<CartItem>)session.getAttribute("cart");
-
-        for (int i = 0; i < cart.size(); i++){
-            cartService.updateItemByItemIdAndPay(username, cart.get(i).getItem().getItemId(),true);
-        }
-        session.removeAttribute("cart");
 
         return  payService.aliPay(new OrderVo()
                 .setBody(order.getUsername())
@@ -150,7 +140,19 @@ public class OrderController {
     }
 
     @GetMapping("/return")
-    public String PayReturn(){
+    public String PayReturn(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Order order = (Order) session.getAttribute("order");
+        session.setAttribute("lineItems",order.getLineItems());
+        orderService.insertOrder(order);
+        User user = (User) session.getAttribute("user");
+        String username = user.getUsername();
+        List<CartItem> cart = (List<CartItem>)session.getAttribute("cart");
+        for (int i = 0; i < cart.size(); i++){
+            cartService.updateItemByItemIdAndPay(username, cart.get(i).getItem().getItemId(),true);
+        }
+        session.removeAttribute("cart");
+
         return "/order/ViewOrder";
     }
 
